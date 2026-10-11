@@ -16,4 +16,11 @@ Unresolved product and technical decisions. Do not resolve silently: when answer
 | 10 | Browser-extension feasibility, permissions, and store policies for later phase? | Later optional phase | Post-MVP |
 | 11 | Import of previously exported data in MVP? | Data ownership | M6 |
 | 12 | Licensing/branding: confirm "Nodi" name availability and trademark checks. | Launch risk | Before public release |
-| 13 | Competitor review: what do Ravelo and others actually offer today? (Not yet researched.) | Hypothesis honesty | Before positioning claims |
+| 13 | Competitor verification: re-run `docs/COMPETITIVE_ANALYSIS.md` §5 with direct product access (Ravelo, Opal, Freedom, RescueTime, Toggl, ActivityWatch, Apple Screen Time, Digital Wellbeing, timeboxing tools). First pass was search-summary only. | Hypothesis honesty | Before positioning claims and before M1 data model |
+| 14 | Approve, edit, or reject the proposed 14-day diary experiment, its pass/fail thresholds (`VALIDATION_PLAN.md` §2–3), and the go/no-go recommendation. | Gates whether and how M1 starts | Before M1 |
+| 15 | Which narrow segment(s) to recruit for the experiment? (A testing choice; the broad vision is unchanged.) | Q1 of the strategic review | Before experiment |
+| 16 | Does the experiment come before M1, or in parallel with technical groundwork? `ROADMAP.md` currently has no pre-build validation milestone. | Roadmap integrity | Before M1 |
+| 17 | Who runs the experiment (recruiting, consent, interviews, coding) and where is participant data held? | Ethics, privacy, feasibility | Before experiment |
+| 18 | Should "currency/ledger" vocabulary be provisional until comprehension is tested (plain alternative as default in all mocks)? | Principle 3, Q4 | Before M4 copy |
+| 19 | What are the success criteria for a plain-wording vs. currency-wording comparison? | H8 | Before experiment |
+| 20 | Is a two-reviewer coding scheme for guilt/pressure in free text acceptable, or is a validated scale preferred? | Measurement quality | Before experiment |

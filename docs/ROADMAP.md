@@ -36,3 +36,6 @@ Use the MVP with real users to test the differentiating hypothesis.
 
 ## Later (not approved)
 Optional browser extension for website/domain observation (opt-in, explainable, with its own privacy review). Anything in the non-goals list requires separate approval.
+
+## Proposed amendment (not adopted): M0.5 — Pre-build validation
+Per `docs/VALIDATION_PLAN.md`, a competitor verification pass and a 14-day diary experiment are recommended before M1. Pending the product owner's decision (OPEN_QUESTIONS #14, #16); until then the milestones above are unchanged.
