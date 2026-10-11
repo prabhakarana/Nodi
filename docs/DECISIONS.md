@@ -54,3 +54,8 @@ Format: ID, date, status, decision, rationale.
 - **Date:** 2026-10-11
 - **Status:** Open — recorded so it is not assumed
 - **Decision:** `PRODUCT_VISION.md` limits automatic tracking to a later, optional browser-extension phase. Native device-wide tracking goes beyond this and remains a non-approved scope until the owner approves it explicitly, after the Apple feasibility spike and a privacy review. Until then, no automatic-tracking work and no claim of device-wide observation.
+
+## D-007 addendum — schema draft
+- **Date:** 2026-10-12
+- **Status:** Draft only; not accepted.
+- **Note:** A concrete proposal for the D-007 format exists in `docs/EVENT_SCHEMA.md` and `docs/schema/`. It is not binding until the owner accepts it and a new decision entry records that, including the sub-decisions OPEN_QUESTIONS #27–#34.

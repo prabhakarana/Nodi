@@ -1,0 +1,92 @@
+{
+  "format": "nodi-export",
+  "schemaVersion": 0,
+  "exportedAt": "2026-10-12T04:30:00Z",
+  "app": { "name": "nodi-web-validation", "version": "0.0.0", "platform": "web", "installId": "01928f3e-0000-7000-8000-00000000a001" },
+  "data": {
+    "categories": [
+      { "id": "01928f3e-0000-7000-8000-00000000c001", "name": "Family", "archived": false, "createdAt": "2026-10-11T14:00:00Z", "updatedAt": "2026-10-11T14:00:00Z" },
+      { "id": "01928f3e-0000-7000-8000-00000000c002", "name": "Reading", "color": "#3366aa", "archived": false, "createdAt": "2026-10-11T14:00:00Z", "updatedAt": "2026-10-11T14:00:00Z" },
+      { "id": "01928f3e-0000-7000-8000-00000000c003", "name": "Rest", "archived": false, "createdAt": "2026-10-11T14:00:00Z", "updatedAt": "2026-10-11T14:00:00Z" }
+    ],
+    "intentions": [
+      {
+        "id": "01928f3e-0000-7000-8000-00000000d001", "scope": "day", "date": "2026-10-11",
+        "text": "Read before bed", "categoryId": "01928f3e-0000-7000-8000-00000000c002",
+        "target": { "minutes": 30, "comparison": "about" },
+        "createdAt": "2026-10-11T14:05:00Z", "updatedAt": "2026-10-11T14:05:00Z"
+      }
+    ],
+    "entries": [
+      {
+        "id": "01928f3e-0000-7000-8000-00000000e001",
+        "intervals": [{ "start": "2026-10-11T18:00:00Z", "end": "2026-10-11T19:15:00Z" }],
+        "tz": "America/Los_Angeles",
+        "source": { "kind": "manual" },
+        "categoryId": "01928f3e-0000-7000-8000-00000000c001", "categoryAssignedBy": "user",
+        "title": "Dinner with family",
+        "createdAt": "2026-10-11T19:20:00Z", "updatedAt": "2026-10-11T19:20:00Z"
+      },
+      {
+        "id": "01928f3e-0000-7000-8000-00000000e002",
+        "intervals": [
+          { "start": "2026-10-12T03:00:00Z", "end": "2026-10-12T03:12:00Z" },
+          { "start": "2026-10-12T03:15:00Z", "end": "2026-10-12T03:28:00Z" }
+        ],
+        "tz": "America/Los_Angeles",
+        "source": { "kind": "timer" },
+        "categoryId": "01928f3e-0000-7000-8000-00000000c002", "categoryAssignedBy": "user",
+        "intentionId": "01928f3e-0000-7000-8000-00000000d001",
+        "createdAt": "2026-10-12T03:28:00Z", "updatedAt": "2026-10-12T03:28:00Z"
+      },
+      {
+        "id": "01928f3e-0000-7000-8000-00000000e003",
+        "intervals": [{ "start": "2026-10-11T20:00:00Z", "end": "2026-10-11T20:40:00Z" }],
+        "tz": "America/Los_Angeles",
+        "source": {
+          "kind": "observed",
+          "observer": { "id": "browser-ext-1", "type": "browser_extension", "version": "0.1.0" },
+          "subject": { "type": "domain", "identifier": "example.com" },
+          "externalKey": "2026-10-11T20:00Z/example.com"
+        },
+        "categoryId": null,
+        "createdAt": "2026-10-11T20:41:00Z", "updatedAt": "2026-10-11T20:41:00Z"
+      },
+      {
+        "id": "01928f3e-0000-7000-8000-00000000e004",
+        "intervals": [{ "start": "2026-10-11T21:00:00Z", "end": "2026-10-11T22:00:00Z" }],
+        "tz": "America/Los_Angeles",
+        "source": { "kind": "manual" },
+        "categoryId": "01928f3e-0000-7000-8000-00000000c003", "categoryAssignedBy": "user",
+        "corrections": [
+          {
+            "at": "2026-10-12T01:00:00Z", "by": "user",
+            "fields": { "intervals": { "from": [{ "start": "2026-10-11T21:00:00Z", "end": "2026-10-11T21:30:00Z" }], "to": [{ "start": "2026-10-11T21:00:00Z", "end": "2026-10-11T22:00:00Z" }] } },
+            "note": "Remembered I rested longer."
+          }
+        ],
+        "createdAt": "2026-10-11T21:31:00Z", "updatedAt": "2026-10-12T01:00:00Z"
+      },
+      {
+        "id": "01928f3e-0000-7000-8000-00000000e005",
+        "intervals": [{ "start": "2026-10-11T22:00:00Z", "end": "2026-10-11T22:20:00Z" }],
+        "tz": "America/Los_Angeles",
+        "source": {
+          "kind": "inferred",
+          "method": "gap-between-timers-same-category",
+          "basis": ["01928f3e-0000-7000-8000-00000000e004"],
+          "explanation": "Proposed because you logged Rest before and after this gap. Not confirmed."
+        },
+        "categoryId": "01928f3e-0000-7000-8000-00000000c003", "categoryAssignedBy": "user_rule",
+        "createdAt": "2026-10-11T22:21:00Z", "updatedAt": "2026-10-11T22:21:00Z"
+      }
+    ],
+    "reflections": [
+      {
+        "id": "01928f3e-0000-7000-8000-00000000f001", "scope": "day", "date": "2026-10-11",
+        "text": "Evening went more to the browser than I meant to. I'd like to protect reading time tomorrow.",
+        "createdAt": "2026-10-12T03:40:00Z", "updatedAt": "2026-10-12T03:40:00Z"
+      }
+    ]
+  }
+}

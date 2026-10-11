@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:nodi:schema:export",
+  "title": "Nodi export (DRAFT, schemaVersion 0)",
+  "description": "Platform-neutral ledger format (D-007). schemaVersion 0 means unstable draft; it becomes 1 when accepted. Unknown extra fields are allowed so newer files can be read by older readers; importers must ignore or preserve them, never reject.",
+  "type": "object",
+  "required": ["format", "schemaVersion", "exportedAt", "app", "data"],
+  "properties": {
+    "format": { "const": "nodi-export" },
+    "schemaVersion": { "type": "integer", "minimum": 0 },
+    "exportedAt": { "$ref": "#/$defs/instant" },
+    "app": {
+      "type": "object",
+      "required": ["name", "version", "platform"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "platform": { "enum": ["web", "ios", "ipados", "macos", "windows", "android", "other"] },
+        "installId": { "$ref": "#/$defs/id", "description": "Random per-install id; never a hardware identifier." }
+      }
+    },
+    "data": {
+      "type": "object",
+      "required": ["categories", "intentions", "entries", "reflections"],
+      "properties": {
+        "categories": { "type": "array", "items": { "$ref": "#/$defs/category" } },
+        "intentions": { "type": "array", "items": { "$ref": "#/$defs/intention" } },
+        "entries": { "type": "array", "items": { "$ref": "#/$defs/entry" } },
+        "reflections": { "type": "array", "items": { "$ref": "#/$defs/reflection" } }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "description": "UUIDv7 (time-sortable), generated on the client, so imports never collide.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "instant": {
+      "description": "UTC instant, RFC 3339, with Z suffix, up to millisecond precision.",
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,3})?Z$"
+    },
+    "localDate": {
+      "description": "Calendar date without time zone, YYYY-MM-DD.",
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "interval": {
+      "type": "object",
+      "required": ["start", "end"],
+      "properties": {
+        "start": { "$ref": "#/$defs/instant" },
+        "end": { "$ref": "#/$defs/instant" }
+      }
+    },
+    "category": {
+      "description": "User-defined. Deliberately has no productive/unproductive or good/bad attribute (principle 3).",
+      "type": "object",
+      "required": ["id", "name", "archived", "createdAt", "updatedAt"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "archived": { "type": "boolean" },
+        "createdAt": { "$ref": "#/$defs/instant" },
+        "updatedAt": { "$ref": "#/$defs/instant" }
+      }
+    },
+    "intention": {
+      "type": "object",
+      "required": ["id", "scope", "date", "text", "createdAt", "updatedAt"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "scope": { "enum": ["day", "week"] },
+        "date": { "$ref": "#/$defs/localDate", "description": "The day, or the first day of the week as the user defines weeks." },
+        "text": { "type": "string", "minLength": 1, "maxLength": 280 },
+        "categoryId": { "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+        "target": {
+          "type": "object",
+          "required": ["minutes", "comparison"],
+          "properties": {
+            "minutes": { "type": "integer", "minimum": 0 },
+            "comparison": { "enum": ["about", "at_least", "at_most"] }
+          }
+        },
+        "createdAt": { "$ref": "#/$defs/instant" },
+        "updatedAt": { "$ref": "#/$defs/instant" }
+      }
+    },
+    "source": {
+      "description": "How the time got into the ledger. Corrections are not a source; they are recorded in entry.corrections.",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind"],
+          "properties": { "kind": { "const": "manual" } }
+        },
+        {
+          "type": "object",
+          "required": ["kind"],
+          "properties": { "kind": { "const": "timer" } }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "observer", "externalKey"],
+          "properties": {
+            "kind": { "const": "observed" },
+            "observer": {
+              "type": "object",
+              "required": ["id", "type"],
+              "properties": {
+                "id": { "type": "string", "minLength": 1 },
+                "type": { "enum": ["browser_extension", "os_app_usage", "os_window", "other"] },
+                "version": { "type": "string" }
+              }
+            },
+            "subject": {
+              "description": "What was observed, at the coarsest useful level: app identifier or domain only, never full URL, page title, or content.",
+              "type": "object",
+              "required": ["type"],
+              "properties": {
+                "type": { "enum": ["app", "domain", "none"] },
+                "identifier": { "type": "string" },
+                "displayName": { "type": "string" }
+              }
+            },
+            "externalKey": {
+              "description": "Observer-assigned key, unique per observer, so re-importing the same observation is idempotent.",
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "method", "basis", "explanation"],
+          "properties": {
+            "kind": { "const": "inferred" },
+            "method": { "type": "string", "minLength": 1, "description": "Identifier of the user-visible rule or method used." },
+            "basis": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/id" }, "description": "Entries this was derived from." },
+            "explanation": { "type": "string", "minLength": 1, "description": "Plain-language reason shown to the user." }
+          }
+        }
+      ]
+    },
+    "entry": {
+      "type": "object",
+      "required": ["id", "intervals", "tz", "source", "categoryId", "createdAt", "updatedAt"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "intervals": {
+          "description": "One or more spans; a paused-and-resumed timer yields several. Duration = sum of spans. Must be sorted and non-overlapping.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/interval" }
+        },
+        "tz": { "type": "string", "minLength": 1, "description": "IANA time-zone name at the time of the activity, e.g. America/Los_Angeles. Used to assign the entry to a local day." },
+        "source": { "$ref": "#/$defs/source" },
+        "categoryId": {
+          "description": "null means unclassified: the user (or an observer) has an entry but no category. This is distinct from unaccounted time, which is the absence of any entry.",
+          "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }]
+        },
+        "categoryAssignedBy": {
+          "description": "Required when categoryId is set. Categories are never assigned by hidden classification.",
+          "enum": ["user", "user_rule"]
+        },
+        "intentionId": {
+          "description": "Optional link, set only by the user, never auto-inferred.",
+          "$ref": "#/$defs/id"
+        },
+        "title": { "type": "string", "maxLength": 280 },
+        "note": { "type": "string", "maxLength": 2000 },
+        "corrections": {
+          "description": "Append-only record of user edits to this entry after creation.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["at", "by", "fields"],
+            "properties": {
+              "at": { "$ref": "#/$defs/instant" },
+              "by": { "const": "user" },
+              "fields": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "object",
+                  "required": ["from", "to"]
+                }
+              },
+              "note": { "type": "string", "maxLength": 500 }
+            }
+          }
+        },
+        "createdAt": { "$ref": "#/$defs/instant" },
+        "updatedAt": { "$ref": "#/$defs/instant" }
+      },
+      "if": {
+        "required": ["categoryId"],
+        "properties": { "categoryId": { "type": "string" } }
+      },
+      "then": { "required": ["categoryAssignedBy"] }
+    },
+    "reflection": {
+      "description": "Free text only. No mood scale or score until explicitly decided.",
+      "type": "object",
+      "required": ["id", "scope", "date", "text", "createdAt", "updatedAt"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "scope": { "enum": ["day", "week"] },
+        "date": { "$ref": "#/$defs/localDate" },
+        "text": { "type": "string", "maxLength": 5000 },
+        "createdAt": { "$ref": "#/$defs/instant" },
+        "updatedAt": { "$ref": "#/$defs/instant" }
+      }
+    }
+  }
+}

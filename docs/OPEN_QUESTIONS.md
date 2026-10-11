@@ -25,8 +25,16 @@ Unresolved product and technical decisions. Do not resolve silently: when answer
 | 19 | What are the success criteria for a plain-wording vs. currency-wording comparison? | H8 | Before experiment |
 | 20 | Is a two-reviewer coding scheme for guilt/pressure in free text acceptable, or is a validated scale preferred? | Measurement quality | Before experiment |
 | 21 | Is native device-wide automatic tracking in scope? The vision currently allows only a later optional browser extension (D-008). Requires owner approval after the Apple feasibility spike and privacy review. | Constitution scope | Before any native observer work |
-| 22 | What is the concrete event schema (D-007): fields, ID scheme, time zones, correction model, export format, versioning? | Data survives web tool → native | Before the web tool is built |
+| 22 | **Draft ready for review** (`docs/EVENT_SCHEMA.md`, `docs/schema/`). Accept, amend, or reject the schema (D-007): fields, ID scheme, time zones, correction model, export format, versioning. Sub-decisions are #27–#34. | Data survives web tool → native | Before the web tool is built |
 | 23 | Apple Screen Time feasibility spike: what data can an app actually obtain, and what entitlements and review are needed? (Read current Apple docs; build a minimal proof of concept.) | iOS/iPadOS automatic tracking may be impossible or limited | Before committing to automatic tracking on Apple devices |
 | 24 | Native stack details: SwiftUI-only vs. UIKit/AppKit mix; minimum OS versions; shared core language; how Android and Windows are staffed later. | Long-term architecture | Before native build |
 | 25 | What is the migration path for diary/web-tool data into the native app (import of the D-007 format)? | Continuity of user data | Before native build |
 | 26 | Does sync between a user's Apple devices come in (e.g. via the user's own iCloud) or stay out as a non-goal? | Cross-device cloud sync is currently a non-goal | Before native build |
+| 27 | Overlap precedence: user-authored > observed > inferred, and user-vs-user overlaps flagged rather than auto-resolved (EVENT_SCHEMA §7). Accept? (Refines #5.) | Honest accounting, no double-counting | Before the web tool is built |
+| 28 | Do `inferred` entries count in the account before the user accepts them? Proposal: no. | Principle 7 | Before inference is built |
+| 29 | Is domain-level observation acceptable by default for browser/native observers, or must the user opt in per domain? | Principle 6 | Before any observer |
+| 30 | Is the 24-hour day the base for "unaccounted time", or waking hours? Does a user-defined day start apply? (Refines #4.) | Account correctness | Before the web tool is built |
+| 31 | Should `target.comparison` include `at_most`, or does a cap read as a limit/penalty and conflict with principle 3? | Principle 3 | Before intentions are built |
+| 32 | Can the user purge correction history without deleting the entry? | Provenance vs privacy | Before export/delete |
+| 33 | Do user-created rules (`user_rule`) ship in the first version, or only manual categories? | Scope | Before the web tool is built |
+| 34 | Future-time tolerance for entries (clock skew) and maximum interval length? | Data quality | Before the web tool is built |
