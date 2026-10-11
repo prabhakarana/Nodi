@@ -49,6 +49,8 @@ This is a hypothesis, not a proven competitive advantage. Never claim a capabili
 
 The initial product is a responsive web app for desktop and mobile.
 
+> **Amended by D-006 (`docs/DECISIONS.md`):** the web app is a throwaway validation tool; the long-term product is native, Apple first. Automatic native tracking is not approved (D-008).
+
 ### Initial MVP
 
 - Daily attention account

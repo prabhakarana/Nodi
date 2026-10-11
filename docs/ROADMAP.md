@@ -39,3 +39,6 @@ Optional browser extension for website/domain observation (opt-in, explainable, 
 
 ## Proposed amendment (not adopted): M0.5 — Pre-build validation
 Per `docs/VALIDATION_PLAN.md`, a competitor verification pass and a 14-day diary experiment are recommended before M1. Pending the product owner's decision (OPEN_QUESTIONS #14, #16); until then the milestones above are unchanged.
+
+## Amendment note (D-006)
+Milestones M1–M6 above were written assuming a shipped web app. Under D-006 they apply to the **throwaway web validation tool** only, kept minimal. A native Apple-first roadmap is not yet written and depends on the diary experiment, the Apple feasibility spike (OPEN_QUESTIONS #23), and decisions D-007/D-008.
